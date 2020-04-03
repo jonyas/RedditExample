@@ -1,0 +1,20 @@
+name: presentation
+description: Package holding BLOC classes
+
+environment:
+  sdk: ">=2.6.0 <3.0.0"
+
+dependencies:
+  bloc: ^3.0.0
+  common:
+    path: ../common
+  domain:
+    path: ../domain
+  equatable: ^1.1.1
+  flutter:
+    sdk: flutter
+  flutter_bloc: ^3.2.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
