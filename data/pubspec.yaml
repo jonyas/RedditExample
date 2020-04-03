@@ -5,6 +5,10 @@ environment:
   sdk: ">=2.6.0 <3.0.0"
 
 dependencies:
+  common:
+    path: ../common
+  domain:
+    path: ../domain
   flutter:
     sdk: flutter
 
