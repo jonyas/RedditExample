@@ -1,0 +1,21 @@
+name: di
+description: Package responsible of handling Dependency Injection configuration
+
+environment:
+  sdk: ">=2.6.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_simple_dependency_injection: ^1.0.2
+  data:
+    path: ../data
+  dio: ^3.0.9
+  domain:
+    path: ../domain
+  remote:
+    path: ../remote
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
