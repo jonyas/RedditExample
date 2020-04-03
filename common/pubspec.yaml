@@ -1,0 +1,14 @@
+name: common
+description: Layer responsible of holding data entities and utility methods used by cross layers
+
+environment:
+  sdk: ">=2.6.0 <3.0.0"
+
+dependencies:
+  equatable: ^1.1.1
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter

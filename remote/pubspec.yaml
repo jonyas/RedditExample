@@ -1,0 +1,17 @@
+name: remote
+description: Remote layer responsible of fetching data from remote data source
+
+environment:
+  sdk: ">=2.6.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  http: 0.12.0+4
+  json_annotation: ^3.0.0
+
+dev_dependencies:
+  build_runner: ^1.8.1
+  flutter_test:
+    sdk: flutter
+  json_serializable: ^3.3.0

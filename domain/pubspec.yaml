@@ -1,0 +1,13 @@
+name: domain
+description: Domain layer responsible of exposing domain specific use cases exposed to app layer
+
+environment:
+  sdk: ">=2.6.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
