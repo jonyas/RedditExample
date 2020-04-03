@@ -1,7 +1,7 @@
 import 'package:common/entities.dart';
-import 'package:data/datasource/subreddit_remote_datastore.dart';
+import 'package:data/data.dart';
+import 'package:domain/domain.dart';
 import 'package:flutter/foundation.dart';
-import 'package:domain/repositories/subreddit_repository.dart';
 
 class SubredditRepositoryImpl implements SubredditRepository {
   const SubredditRepositoryImpl(this._remoteDatastore);

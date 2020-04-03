@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:remote/entities.dart';
 import 'package:retrofit/http.dart';
+
+import 'entities.dart';
 
 part 'subreddit_restclient.g.dart';
 

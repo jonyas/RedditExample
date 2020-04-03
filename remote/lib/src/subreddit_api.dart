@@ -1,7 +1,8 @@
 import 'package:common/entities.dart';
-import 'package:data/datasource/subreddit_remote_datastore.dart';
-import 'package:remote/entities.dart';
-import 'package:remote/subreddit_restclient.dart';
+import 'package:data/data.dart';
+import 'package:remote/remote.dart';
+
+import 'entities.dart';
 
 class SubredditApi implements SubredditRemoteDatastore {
   const SubredditApi(this._restClient);

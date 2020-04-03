@@ -2,8 +2,7 @@ import 'package:common/entities.dart';
 import 'package:dio/dio.dart';
 import 'package:mock_web_server/mock_web_server.dart';
 import 'package:quiver/core.dart';
-import 'package:remote/subreddit_api.dart';
-import 'package:remote/subreddit_restclient.dart';
+import 'package:remote/remote.dart';
 import 'package:test/test.dart';
 
 import 'remote_test_data.dart';

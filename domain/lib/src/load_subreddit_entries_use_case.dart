@@ -1,6 +1,6 @@
-import 'package:domain/repositories/subreddit_repository.dart';
-import 'package:flutter/foundation.dart';
 import 'package:common/entities.dart';
+import 'package:domain/domain.dart';
+import 'package:flutter/foundation.dart';
 
 class LoadSubredditEntriesUseCase {
   const LoadSubredditEntriesUseCase(
