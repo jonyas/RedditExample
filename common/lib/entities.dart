@@ -52,3 +52,19 @@ class RedditAuthor extends Equatable {
   @override
   List<Object> get props => [name, thumbnail];
 }
+
+@immutable
+class SubredditEntryComment extends Equatable {
+  const SubredditEntryComment({
+    @required this.text,
+    @required this.score,
+    @required this.authorUsername,
+  });
+
+  final String text;
+  final int score;
+  final String authorUsername;
+
+  @override
+  List<Object> get props => [text, score, authorUsername];
+}
