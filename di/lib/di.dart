@@ -15,6 +15,7 @@ class DependencyInjection {
     bind<SubredditRepository>((i) => SubredditRepositoryImpl(i.get()));
     // Domain layer binding
     bind<LoadSubredditEntriesUseCase>((i) => LoadSubredditEntriesUseCase(i.get()));
+    bind<LoadSubredditEntryCommentsUseCase>((i) => LoadSubredditEntryCommentsUseCase(i.get()));
   }
 
   static void bind<T>(ObjectFactory<T> factoryFn, {bool isSingleton = false, String key}) {
