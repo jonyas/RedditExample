@@ -2,16 +2,21 @@ import 'package:common/entities.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:redditexample/entities.dart';
 import 'package:redditexample/extensions.dart';
 
 class PostedByWidget extends StatelessWidget {
-  const PostedByWidget({
-    @required this.author,
+  PostedByWidget({
+    this.author,
+    this.authorUsername,
     Key key,
-  }) : super(key: key);
+  })  : assert((author != null) != (authorUsername != null && authorUsername.isNotEmpty),
+            'Only author or authorUsername required. Not both, or none.'),
+        super(key: key);
 
   final RedditAuthor author;
+  final String authorUsername;
 
   @override
   Widget build(BuildContext context) {
@@ -21,14 +26,14 @@ class PostedByWidget extends StatelessWidget {
         children: [
           TextSpan(text: 'Posted by '),
           TextSpan(
-            text: author.name,
+            text: author?.name ?? authorUsername,
             style: Theme.of(context)
                 .textTheme
                 .caption
                 .copyWith(fontStyle: FontStyle.italic, backgroundColor: Colors.grey, color: Colors.white),
             recognizer: TapGestureRecognizer()
               ..onTap = () {
-                showSnackBar(context: context, text: 'This would open ${author.name} profile page');
+                showSnackBar(context: context, text: 'This would open ${author?.name ?? authorUsername} profile page');
               },
           )
         ],
@@ -191,5 +196,26 @@ class SubredditTypeContainer extends StatelessWidget {
       default:
         throw ArgumentError('$type is not a valid SubredditEntryType');
     }
+  }
+}
+
+class CustomMarkdownBody extends StatelessWidget {
+  const CustomMarkdownBody({
+    @required this.text,
+    Key key,
+  }) : super(key: key);
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return MarkdownBody(
+      data: text,
+      styleSheet: MarkdownStyleSheet(
+        textAlign: WrapAlignment.spaceEvenly,
+        p: Theme.of(context).textTheme.body1,
+      ),
+      onTapLink: (link) => showSnackBar(context: context, text: 'This would open pressed link'),
+    );
   }
 }

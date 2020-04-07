@@ -5,7 +5,6 @@ import 'package:common/entities.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:presentation/presentation.dart';
 import 'package:redditexample/comments_page.dart';
 import 'package:redditexample/components.dart';
@@ -191,14 +190,7 @@ class _SubredditEntryWidget extends StatelessWidget {
                   if (entry.selftext.isNotEmpty)
                     Padding(
                       padding: EdgeInsets.only(right: 16, left: 16, top: entry.flair.isEmpty ? 16 : 0),
-                      child: MarkdownBody(
-                        data: entry.selftext,
-                        styleSheet: MarkdownStyleSheet(
-                          textAlign: WrapAlignment.spaceEvenly,
-                          p: Theme.of(context).textTheme.body1,
-                        ),
-                        onTapLink: (link) => showSnackBar(context: context, text: 'This would open pressed link'),
-                      ),
+                      child: CustomMarkdownBody(text: entry.selftext),
                     ),
                 ],
               ),
@@ -208,7 +200,7 @@ class _SubredditEntryWidget extends StatelessWidget {
                 child: OpenContainer(
                   transitionType: ContainerTransitionType.fade,
                   openBuilder: (BuildContext context, VoidCallback _) {
-                    return CommentsPage();
+                    return CommentsPage(subredditEntry: entry);
                   },
                   closedElevation: 6.0,
                   closedShape: const RoundedRectangleBorder(
