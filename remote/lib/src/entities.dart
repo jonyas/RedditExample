@@ -6,77 +6,151 @@ import 'package:time/time.dart';
 part 'entities.g.dart';
 
 @JsonSerializable(createToJson: false)
-class RemoteSubredditEntryListing {
-  RemoteSubredditEntryListing({this.data});
+class RemoteRedditEntryListing {
+  RemoteRedditEntryListing({this.data});
 
-  final RemoteSubredditEntryListingData data;
+  final RemoteRedditEntryListingData data;
 
-  factory RemoteSubredditEntryListing.fromJson(Map<String, dynamic> json) {
-    return _$RemoteSubredditEntryListingFromJson(json);
+  factory RemoteRedditEntryListing.fromJson(Map<String, dynamic> json) {
+    return _$RemoteRedditEntryListingFromJson(json);
   }
 }
 
 @JsonSerializable(createToJson: false)
-class RemoteSubredditEntryListingData {
-  RemoteSubredditEntryListingData({this.children});
+class RemoteRedditEntryListingData<T extends RemoteRedditListingDataChildren> {
+  RemoteRedditEntryListingData({this.children});
 
-  final List<RemoteSubredditEntryListingDataChildren> children;
+  @_RedditEntryConverter()
+  final List<T> children;
 
-  factory RemoteSubredditEntryListingData.fromJson(Map<String, dynamic> json) {
-    return _$RemoteSubredditEntryListingDataFromJson(json);
+  factory RemoteRedditEntryListingData.fromJson(Map<String, dynamic> json) {
+    return _$RemoteRedditEntryListingDataFromJson(json);
+  }
+}
+
+class _RedditEntryConverter<T extends RemoteRedditListingDataChildren> implements JsonConverter<T, Object> {
+  const _RedditEntryConverter();
+
+  @override
+  T fromJson(Object json) {
+    if (json is Map<String, dynamic> && json.containsKey('kind') && json['kind'] == 't1') {
+      return RemoteSubredditCommentListingDataChildren.fromJson(json) as T;
+    }
+    if (json is Map<String, dynamic> && json.containsKey('kind') && json['kind'] == 't3') {
+      return RemoteSubredditListingDataChildren.fromJson(json) as T;
+    }
+    return json as T;
+  }
+
+  @override
+  Object toJson(T object) {
+    return object;
+  }
+}
+
+abstract class RemoteRedditListingDataChildren {}
+
+@JsonSerializable(createToJson: false)
+class RemoteSubredditCommentListingDataChildren extends RemoteRedditListingDataChildren {
+  RemoteSubredditCommentListingDataChildren({
+    this.kind,
+    this.data,
+  });
+
+  final String kind;
+  final RemoteSubredditCommentEntryListingDataChildrenData data;
+
+  factory RemoteSubredditCommentListingDataChildren.fromJson(Map<String, dynamic> json) {
+    return _$RemoteSubredditCommentListingDataChildrenFromJson(json);
   }
 }
 
 @JsonSerializable(createToJson: false)
-class RemoteSubredditEntryListingDataChildren {
-  RemoteSubredditEntryListingDataChildren({this.data});
+class RemoteSubredditListingDataChildren extends RemoteRedditListingDataChildren {
+  RemoteSubredditListingDataChildren({
+    this.kind,
+    this.data,
+  });
 
+  final String kind;
   final RemoteSubredditEntryListingDataChildrenData data;
 
-  factory RemoteSubredditEntryListingDataChildren.fromJson(Map<String, dynamic> json) {
-    return _$RemoteSubredditEntryListingDataChildrenFromJson(json);
+  factory RemoteSubredditListingDataChildren.fromJson(Map<String, dynamic> json) {
+    return _$RemoteSubredditListingDataChildrenFromJson(json);
   }
 }
 
 @JsonSerializable(createToJson: false)
-class RemoteSubredditEntryListingDataChildrenData {
-  RemoteSubredditEntryListingDataChildrenData({
+class RemoteRedditEntryListingDataChildrenData {
+  RemoteRedditEntryListingDataChildrenData({
     this.author,
-    this.authorThumbnail,
-    this.commentCount,
     this.created,
     this.id,
+    this.score,
+  });
+
+  final String author;
+  @JsonKey(name: 'created_utc')
+  final num created;
+  final String id;
+  final int score;
+
+  factory RemoteRedditEntryListingDataChildrenData.fromJson(Map<String, dynamic> json) {
+    return _$RemoteRedditEntryListingDataChildrenDataFromJson(json);
+  }
+}
+
+@JsonSerializable(createToJson: false)
+class RemoteSubredditEntryListingDataChildrenData extends RemoteRedditEntryListingDataChildrenData {
+  RemoteSubredditEntryListingDataChildrenData({
+    String author,
+    this.authorThumbnail,
+    this.commentCount,
+    num created,
+    String id,
     this.linkFlairText,
     this.preview,
     this.postHint,
     this.selftext,
-    this.score,
+    int score,
     this.subreddit,
     this.title,
     this.url,
-  });
+  }) : super(author: author, created: created, id: id, score: score);
 
-  final String author;
   @JsonKey(name: 'thumbnail')
   final String authorThumbnail;
-  @JsonKey(name: 'created_utc')
-  final num created;
   @JsonKey(name: 'num_comments')
   final int commentCount;
-  final String id;
   @JsonKey(name: 'link_flair_text')
   final String linkFlairText;
   @JsonKey(name: 'post_hint')
   final String postHint;
   final String selftext;
   final String subreddit;
-  final int score;
   final String title;
   final String url;
   final RemoteSubredditEntryListingDataChildrenPreview preview;
 
   factory RemoteSubredditEntryListingDataChildrenData.fromJson(Map<String, dynamic> json) {
     return _$RemoteSubredditEntryListingDataChildrenDataFromJson(json);
+  }
+}
+
+@JsonSerializable(createToJson: false)
+class RemoteSubredditCommentEntryListingDataChildrenData extends RemoteRedditEntryListingDataChildrenData {
+  RemoteSubredditCommentEntryListingDataChildrenData({
+    String author,
+    this.body,
+    num created,
+    String id,
+    int score,
+  }) : super(author: author, created: created, id: id, score: score);
+
+  final String body;
+
+  factory RemoteSubredditCommentEntryListingDataChildrenData.fromJson(Map<String, dynamic> json) {
+    return _$RemoteSubredditCommentEntryListingDataChildrenDataFromJson(json);
   }
 }
 
@@ -110,6 +184,17 @@ class RemoteSubredditEntryListingDataChildrenPreviewImageSource {
 
   factory RemoteSubredditEntryListingDataChildrenPreviewImageSource.fromJson(Map<String, dynamic> json) {
     return _$RemoteSubredditEntryListingDataChildrenPreviewImageSourceFromJson(json);
+  }
+}
+
+extension RemoteSubredditCommentEntryListingDataChildrenDataExtension
+    on RemoteSubredditCommentEntryListingDataChildrenData {
+  SubredditEntryComment toSubredditEntryComment() {
+    return SubredditEntryComment(
+      authorUsername: this.author,
+      score: this.score,
+      text: this.body,
+    );
   }
 }
 

@@ -32,7 +32,32 @@ class _SubredditRestClient implements SubredditRestClient {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = RemoteSubredditEntryListing.fromJson(_result.data);
+    final value = RemoteRedditEntryListing.fromJson(_result.data);
+    return Future.value(value);
+  }
+
+  @override
+  loadSubredditEntryComments(
+      {subredditName, subredditEntryId, threaded}) async {
+    ArgumentError.checkNotNull(subredditName, 'subredditName');
+    ArgumentError.checkNotNull(subredditEntryId, 'subredditEntryId');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{'threaded': threaded};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    final Response<List<dynamic>> _result = await _dio.request(
+        '/r/$subredditName/comments/$subredditEntryId.json',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    var value = _result.data
+        .map((dynamic i) =>
+            RemoteRedditEntryListing.fromJson(i as Map<String, dynamic>))
+        .toList();
     return Future.value(value);
   }
 }

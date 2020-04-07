@@ -6,36 +6,56 @@ part of 'entities.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-RemoteSubredditEntryListing _$RemoteSubredditEntryListingFromJson(
+RemoteRedditEntryListing _$RemoteRedditEntryListingFromJson(
     Map<String, dynamic> json) {
-  return RemoteSubredditEntryListing(
+  return RemoteRedditEntryListing(
     data: json['data'] == null
         ? null
-        : RemoteSubredditEntryListingData.fromJson(
+        : RemoteRedditEntryListingData.fromJson(
             json['data'] as Map<String, dynamic>),
   );
 }
 
-RemoteSubredditEntryListingData _$RemoteSubredditEntryListingDataFromJson(
-    Map<String, dynamic> json) {
-  return RemoteSubredditEntryListingData(
+RemoteRedditEntryListingData<T> _$RemoteRedditEntryListingDataFromJson<
+    T extends RemoteRedditListingDataChildren>(Map<String, dynamic> json) {
+  return RemoteRedditEntryListingData<T>(
     children: (json['children'] as List)
-        ?.map((e) => e == null
-            ? null
-            : RemoteSubredditEntryListingDataChildren.fromJson(
-                e as Map<String, dynamic>))
+        ?.map(_RedditEntryConverter<T>().fromJson)
         ?.toList(),
   );
 }
 
-RemoteSubredditEntryListingDataChildren
-    _$RemoteSubredditEntryListingDataChildrenFromJson(
+RemoteSubredditCommentListingDataChildren
+    _$RemoteSubredditCommentListingDataChildrenFromJson(
         Map<String, dynamic> json) {
-  return RemoteSubredditEntryListingDataChildren(
+  return RemoteSubredditCommentListingDataChildren(
+    kind: json['kind'] as String,
+    data: json['data'] == null
+        ? null
+        : RemoteSubredditCommentEntryListingDataChildrenData.fromJson(
+            json['data'] as Map<String, dynamic>),
+  );
+}
+
+RemoteSubredditListingDataChildren _$RemoteSubredditListingDataChildrenFromJson(
+    Map<String, dynamic> json) {
+  return RemoteSubredditListingDataChildren(
+    kind: json['kind'] as String,
     data: json['data'] == null
         ? null
         : RemoteSubredditEntryListingDataChildrenData.fromJson(
             json['data'] as Map<String, dynamic>),
+  );
+}
+
+RemoteRedditEntryListingDataChildrenData
+    _$RemoteRedditEntryListingDataChildrenDataFromJson(
+        Map<String, dynamic> json) {
+  return RemoteRedditEntryListingDataChildrenData(
+    author: json['author'] as String,
+    created: json['created_utc'] as num,
+    id: json['id'] as String,
+    score: json['score'] as int,
   );
 }
 
@@ -59,6 +79,18 @@ RemoteSubredditEntryListingDataChildrenData
     subreddit: json['subreddit'] as String,
     title: json['title'] as String,
     url: json['url'] as String,
+  );
+}
+
+RemoteSubredditCommentEntryListingDataChildrenData
+    _$RemoteSubredditCommentEntryListingDataChildrenDataFromJson(
+        Map<String, dynamic> json) {
+  return RemoteSubredditCommentEntryListingDataChildrenData(
+    author: json['author'] as String,
+    body: json['body'] as String,
+    created: json['created_utc'] as num,
+    id: json['id'] as String,
+    score: json['score'] as int,
   );
 }
 

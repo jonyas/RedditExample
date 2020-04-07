@@ -14,6 +14,23 @@ class SubredditApi implements SubredditRemoteDatastore {
     return _restClient
         .loadSubredditEntries(subredditName, afterSubredditId: loadAfterEntry?.id)
         .then((entryListing) => entryListing.data.children)
-        .then((entryListingDataChildren) => entryListingDataChildren.map((item) => item.data.toSubredditEntry()));
+        .then(
+          (entryListingDataChildren) => entryListingDataChildren
+              .cast<RemoteSubredditListingDataChildren>()
+              .map((item) => item.data.toSubredditEntry()),
+        );
+  }
+
+  @override
+  Future<Iterable<SubredditEntryComment>> loadSubredditEntryComments(SubredditEntry entry) {
+    return _restClient
+        // For simplicity, let's leave it all comments as single threaded
+        .loadSubredditEntryComments(subredditName: entry.subreddit, subredditEntryId: entry.id, threaded: false)
+        .then((entryListing) => entryListing.last.data.children)
+        .then(
+          (entryListingDataChildren) => entryListingDataChildren
+              .cast<RemoteSubredditCommentListingDataChildren>()
+              .map((item) => item.data.toSubredditEntryComment()),
+        );
   }
 }

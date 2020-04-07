@@ -1,14 +1,18 @@
 import 'dart:async';
 
+import 'package:animations/animations.dart';
 import 'package:common/entities.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:presentation/presentation.dart';
+import 'package:redditexample/comments_page.dart';
 import 'package:redditexample/components.dart';
 import 'package:redditexample/extensions.dart';
 import 'package:transparent_image/transparent_image.dart';
+
+const double _fabDimension = 48.0;
 
 class SubredditPage extends StatefulWidget {
   @override
@@ -201,11 +205,31 @@ class _SubredditEntryWidget extends StatelessWidget {
               Positioned(
                 right: 16,
                 top: 208,
-                child: FloatingActionButton(
-                  mini: true,
-                  child: Icon(Icons.comment, color: Colors.white, size: 18),
-                  onPressed: () {
-                    // TODO open comments
+                child: OpenContainer(
+                  transitionType: ContainerTransitionType.fade,
+                  openBuilder: (BuildContext context, VoidCallback _) {
+                    return CommentsPage();
+                  },
+                  closedElevation: 6.0,
+                  closedShape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(_fabDimension / 2),
+                    ),
+                  ),
+                  transitionDuration: const Duration(milliseconds: 500),
+                  closedColor: Theme.of(context).colorScheme.secondary,
+                  closedBuilder: (BuildContext context, VoidCallback openContainer) {
+                    return SizedBox(
+                      height: _fabDimension,
+                      width: _fabDimension,
+                      child: Center(
+                        child: Icon(
+                          Icons.comment,
+                          size: 18,
+                          color: Theme.of(context).colorScheme.onSecondary,
+                        ),
+                      ),
+                    );
                   },
                 ),
               ),
