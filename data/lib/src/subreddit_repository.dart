@@ -17,4 +17,11 @@ class SubredditRepositoryImpl implements SubredditRepository {
     // source to use, combine, etc. based on requirements
     return _remoteDatastore.loadSubredditEntries(subredditName: subredditName, loadAfterEntry: loadAfterEntry);
   }
+
+  @override
+  Future<Iterable<SubredditEntryComment>> loadSubredditEntryComments(SubredditEntry entry) {
+    // If we would have cache layer, this method would be responsible of deciding which
+    // source to use, combine, etc. based on requirements
+    return _remoteDatastore.loadSubredditEntryComments(entry);
+  }
 }

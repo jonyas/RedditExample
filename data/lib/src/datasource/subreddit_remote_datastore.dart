@@ -6,4 +6,6 @@ abstract class SubredditRemoteDatastore {
     @required String subredditName,
     SubredditEntry loadAfterEntry,
   });
+
+  Future<Iterable<SubredditEntryComment>> loadSubredditEntryComments(SubredditEntry entry);
 }
