@@ -2,15 +2,24 @@
 
 A flutter application which renders a given subreddit
 
-## Getting Started
+## How to run this example
 
-This project is a starting point for a Flutter application.
+To run this project, you need to follow this instructions:
 
-A few resources to get you started if this is your first Flutter project:
+*   [Install flutter in your machine](https://flutter.dev/docs/get-started/install).
+    *   Please, ensure you also setup an Android or iOS emulator
+*   Launch an emulator or plug a development device, Android or iOS.
+*   Execute `flutter run` in your terminal in project home folder.
+    *   NOTE: If launching in real device, you can execute `flutter run --release` for an optimised build (smoother transitions and animations)
+    
+## Architecture
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+This project combines Clean Architecture, being domain layer the core of the app and the only model based layer which does not depend on other layers (only common for simplicity). Here a nice illustration about this architecture pattern:
+![Clean architecture diagram](https://koenig-media.raywenderlich.com/uploads/2019/06/Android-Clean-Architecture.png)
+[Source](https://www.raywenderlich.com/3595916-clean-architecture-tutorial-for-android-getting-started)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+UI and presentation layers are divided using BLoC pattern (The Business Logic Component) which allows to separate presentation layer from business logic.
+
+## Demo
+
+![A small screen captured demo](./screenshots/demo.gif)
